@@ -21,7 +21,8 @@ app.get('/', function (req, res) {
 
 app.post('/sheets', function(req, res){
   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-  console.log("Received: ", req.stack)
+  console.log("Received: ", req.route)
+  console.log(JSON.stringify(req.route.stack))
   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
   console.log(req.body)
     var name = req.body.name;
