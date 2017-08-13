@@ -9,6 +9,8 @@
   "author": "Alan Burstein",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
     "google-auth-library": "^0.10.0",
     "googleapis": "^20.1.0"
   }
