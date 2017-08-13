@@ -9,7 +9,12 @@ var googleAuth = require('google-auth-library');
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express()
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
+// app.use( bodyParser.json() );       // to support JSON-encoded bodies
+// app.use( bodyParser.urlencoded({ extended: false }))
+// // parse some custom thing into a Buffer 
+// app.use(bodyParser.raw())
+// parse an HTML body into a string 
+app.use(bodyParser.text())
 
 app.get('/', function (req, res) {
   console.log("** Received GET, responding with Hello World")
@@ -21,14 +26,12 @@ app.get('/', function (req, res) {
 
 app.post('/sheets', function(req, res){
   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-  console.log("Received: ", req.route)
-  console.log(JSON.stringify(req.route.stack))
+  console.log("Received: ", req.body)
   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-  console.log(req.body)
     var name = req.body.name;
     console.log("** Received request for: ",name);
 
-    name="Ivorine Do"
+    // name="Ivorine Do"
    var auth = new googleAuth();
    var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
@@ -50,7 +53,7 @@ app.post('/sheets', function(req, res){
    var output = {}
    var messages=[]
     messages.push({"text":"hi "+name})
-    messages.push({"text":"Your points are: "+final})
+    messages.push({"text":"Your have: "+final})
     output={"messages":messages}
     res.send(output)
     console.log(results)
