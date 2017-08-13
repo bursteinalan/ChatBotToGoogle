@@ -28,6 +28,7 @@ app.post('/sheets', function(req, res){
     var name = req.body.name;
     console.log("** Received request for: ",name);
 
+    name="Ivorine Do"
    var auth = new googleAuth();
    var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
