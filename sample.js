@@ -20,6 +20,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/sheets', function(req, res){
+  console.log("Received: ",req)
   console.log(req.body)
     var name = req.body.name;
     console.log("** Received request for: ",name);
