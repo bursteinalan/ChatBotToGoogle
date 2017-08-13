@@ -1,0 +1,15 @@
+{
+  "name": "chatgoogle",
+  "version": "1.0.0",
+  "description": "interface between chat bot and google",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alan Burstein",
+  "license": "ISC",
+  "dependencies": {
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^20.1.0"
+  }
+}
