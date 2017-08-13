@@ -13,7 +13,7 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 
 app.get('/', function (req, res) {
   console.log("** Received GET, responding with Hello World")
-  res.send('Hello World!');
+  res.send({"text":'Hello World!'});
 })
 
 app.post('/sheets', function(req, res){
