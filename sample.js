@@ -13,8 +13,11 @@ const app = express()
 // app.use( bodyParser.urlencoded({ extended: false }))
 // // parse some custom thing into a Buffer 
 // app.use(bodyParser.raw())
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 // parse an HTML body into a string 
-app.use(bodyParser.text())
+// app.use(bodyParser.text())
 
 app.get('/', function (req, res) {
   console.log("** Received GET, responding with Hello World")
@@ -25,10 +28,17 @@ app.get('/', function (req, res) {
 })
 
 app.post('/sheets', function(req, res){
+  req.setEncoding('utf8');
   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-  console.log("Received: ", req.body)
+  console.log("Received: ", req)
   console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     var name = req.body.name;
+    var firstName = req.body['first name']
+    var lastName = req.body['last name']
+    
+    console.log("first name: ", firstName)
+    console.log("last name: ", lastName)
+    name=firstName+" "+lastName
     console.log("** Received request for: ",name);
 
     // name="Ivorine Do"
@@ -52,7 +62,7 @@ app.post('/sheets', function(req, res){
     }
    var output = {}
    var messages=[]
-    messages.push({"text":"hi "+name})
+    messages.push({"text":"Hi "+name+", lets check your score"})
     messages.push({"text":"Your have: "+final})
     output={"messages":messages}
     res.send(output)
