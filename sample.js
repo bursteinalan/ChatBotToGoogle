@@ -134,8 +134,12 @@ function authorize(credentials, callback, callback2) {
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, function(err, token) {
     if (err) {
-      getNewToken(oauth2Client, callback);
+      token={"access_token":"ya29.GlulBBCxfEXMWIIfymO5R3zk1WMLlU8WiVnY2R5vL2VVTwJED-yhJN2unLY9HCelasa5bYsva0WALQPnDTplvopebFf3xrsWL1tYLr-fCfRCwq6VbnhobqMs2DlH","refresh_token":"1/8BiHRXOjImRP6cXEmG2pXAIw0Be50TeFOel3laA6OcE","token_type":"Bearer","expiry_date":1502577278805}
+      oauth2Client.credentials = JSON.parse(token);
+      callback(oauth2Client, callback2);
+      // getNewToken(oauth2Client, callback);
     } else {
+
       oauth2Client.credentials = JSON.parse(token);
       callback(oauth2Client, callback2);
     }
