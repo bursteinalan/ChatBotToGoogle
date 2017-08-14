@@ -5,20 +5,6 @@ var googleAuth = require('google-auth-library');
     var clientSecret = "oegYbgZqNLIDR8I8am1gL9op";
     var clientId = "119758712394-oncbrokug93u12gt5igbaqqlsjpkqak2.apps.googleusercontent.com";
     var redirectUrl = "urn:ietf:wg:oauth:2.0:oob";
-var clientIdAdmin = "113773516317606772077"
-
-// {
-//   "type": "service_account",
-//   "project_id": "uplifted-gadget-176621",
-//   "private_key_id": "d7c65cf43d50ace1ef896eff99516eb76fc927e1",
-//   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDevpoQGmzngHem\nhLa8Rx8yPL7fY65cd29BXHbrVL3lT8kMDvAknixfm+JoC7jgyJY47YokrGmF7ij2\n3FIWQKR98f9cPYQrVGb7APpc/MSpItvKgLDxWD0plOBYmMa0tziqNetS3zPP4vn5\nAla/j7OqHOhsqpNk+1ji/xKX5Gs6AG3Vuf8LZh83+oithpZfqMkZNwZ/JtFQOAOk\nbfAMCSGqXxdRyyHhs98L/0iWE44TUTgPNKeq6IuwoZoY75JwCvdsaV3yDyzup54x\nxJZy6ZhBNYTyhXFlnNZzfUiSOYZc97QtoEZ9dQ1mqvNC9DlLqaB4xbcK+LuT3APK\nU4zvJdgVAgMBAAECggEAZ8m2LbSyc/hHSD7kirw1DAqEAcEHuKwqGfGEs8jLpvLT\nQhwfx2AwWuheyY5UueCdJq+AQ/BWRwKe8c/dK+M5Ajple0xqrmnohiKBhhx9YjYM\n5cGrMPmlnh9xnbaqOAB7lcwD95xrHv2q7l0poJ7L34MSxbeBcHcxhqvFtSLI18AG\nmLfpmx/8v67SJnbJ+rjDmMydCn+zHpnnBaCwfgHnkisF54TL8GEmyWS0Md8Z3vwA\nv7Pk5hM3C6NxKVqhJ0bSSugnyFEXiAKXmSuvQTsdfeIHDayhPAmXVrKkNNBtQPq7\ni8K3Wm39LeUFmCKMdqmzQE8pZxwqSmfsbkR78hi6LQKBgQD7biCOu1rFRA4UXezR\nJLHbFL9BBtsah6aHtqo7UleqlyE6sHJx5Q98o1KWJp+sTYLedPvxfAgylZzyP3aa\nSmB3uBwwhzmsamWVVXj75G2p4nxklp+WZUTTBEZnFblXV4WgusFS1yGIaQpaTK8T\ntVbWXUoCvz8NOkQ1h8/sgLi+0wKBgQDiywEC5vrt+qJFrCK/2A+VEPLjsvSoKz0+\nZkSfd8n7Ony1647DnFNxSN1F7QPMut3vztio0gfZWqSkypPEMmARP6LXHa8Mmar0\nXYvXWCpwjcp2qtIWpq+oSgBOdw3+mr5RQ0kGO/TXk0ipSGzLcKoTq6WbNfUj52Cj\nAkhBKtfMdwKBgCwanUtsQffogC/CahAlx60Obp4Rfc2hjeywdhwBza7247VPzkN8\nUsMiQxJjpA6tag9rpeYuQ6Hb7LPxvfRCp7lYall43v0HjNotLBPDdhkeyYM7iLLx\nAKmjTlY20VQo3h/bop3NbuxmwJImcW+bl6fypVDmC0FevyhEsoxh6AZRAoGAW4xk\n2R4SVvRggs1srZJzH9Jaqc24cxYZP9Iai2DYmOBQLUNsOswk5srp/2sgqIkaQ850\nqRk3b+bmJVtc8MsA+pV8j2d9HRH+72u/omsFnq+t9d8YtWoN6FoO652leYxPnRAT\nL0AOouLiZutEd48AKLaWQCQ004x39vVZ42x+9hsCgYAX49qZdQC6IY7Xh0SJ3QP3\nMKfLEIPWPnQkW2U3pOgI5dXDTsJ2NNROGPk6Nstl7DA5HDmbg8LsJ7T7hfe8Z92G\nRsmbK0Hm/3fKEDvmdfS1hwH/5y7TUFjOsMOV9rnLVMAxq9pq++RQYQXr57yhAgjj\nhxk75jmn20rImv7tPZgSZQ==\n-----END PRIVATE KEY-----\n",
-//   "client_email": "google-update@uplifted-gadget-176621.iam.gserviceaccount.com",
-//   "client_id": "113773516317606772077",
-//   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-//   "token_uri": "https://accounts.google.com/o/oauth2/token",
-//   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-//   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-update%40uplifted-gadget-176621.iam.gserviceaccount.com"
-// }
 
 
 
@@ -57,8 +43,7 @@ app.post('/sheets', function(req, res){
    var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
    var SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-   var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-      process.env.USERPROFILE) + '/.credentials/';
+   var TOKEN_DIR = '.credentials/';
    var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
 
    var printlog = function(results){
@@ -172,7 +157,7 @@ app.listen(port, function () {
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/sheets.googleapis.com-nodejs-quickstart.json
 var SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE) + '/.credentials/';
+var TOKEN_DIR =  '.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
 
 // authorize("", getGoogleData);
