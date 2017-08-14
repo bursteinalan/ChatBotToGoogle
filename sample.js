@@ -71,10 +71,13 @@ app.post('/sheets', function(req, res){
 
 app.post('/updateSheet', function(req, res){
 req.setEncoding('utf8');
-    var name = req.body.name;    
-    // console.log("first name: ", firstName)
-    // console.log("last name: ", lastName)
-    // name=firstName+" "+lastName
+   var name = req.body.name;
+    var firstName = req.body['first name']
+    var lastName = req.body['last name']
+    var gender = req.body.gender
+    console.log("first name: ", firstName)
+    console.log("last name: ", lastName)
+    name=firstName+" "+lastName
     console.log("** Received request for: ",name);
 
    var auth = new googleAuth();
@@ -95,18 +98,14 @@ req.setEncoding('utf8');
     console.log(results)
   }
   
-
-  authorize("",updateGoogle, printSuccess);
-  })
-
-function updateGoogle(auth, callback){
+  function updateGoogle(auth, callback){
     console.log("sending data")
   var sheets = google.sheets('v4');
   var body = {
     "range": "Sheet1",
     majorDimension: "ROWS",
     "values": [
-        ["Justin Lee", "90%"]
+        [name, gender]
     ]
 }
   sheets.spreadsheets.values.append({
@@ -125,6 +124,11 @@ function updateGoogle(auth, callback){
 
 });
 }
+
+  authorize("",updateGoogle, printSuccess);
+  })
+
+
 
 
 //Get and return google data
