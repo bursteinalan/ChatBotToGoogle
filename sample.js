@@ -137,7 +137,7 @@ function runGoogle(auth,callback){
   var sheets = google.sheets('v4');
   sheets.spreadsheets.values.get({
     auth: auth,
-    spreadsheetId: '1mnYewufEMg2WCbXFSa_Jqwc4l3oiO_SyG8Q9WuDZoo4',
+    spreadsheetId: '1K4kx2e8zpMfomO3zusm0mOTYQCfE2KEXh62HaLYRgF0',
     range: 'A:B',
   }, function(err, response) {
     console.log("got data")
@@ -265,7 +265,7 @@ function getGoogleData(auth) {
   var sheets = google.sheets('v4');
   sheets.spreadsheets.values.get({
     auth: auth,
-    spreadsheetId: '1mnYewufEMg2WCbXFSa_Jqwc4l3oiO_SyG8Q9WuDZoo4',
+    spreadsheetId: '1K4kx2e8zpMfomO3zusm0mOTYQCfE2KEXh62HaLYRgF0',
     range: 'A:B',
   }, function(err, response) {
     if (err) {
