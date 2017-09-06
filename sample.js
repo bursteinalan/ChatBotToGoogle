@@ -59,7 +59,7 @@ app.post('/sheets', function(req, res){
     }
    var output = {}
    var messages=[]
-    messages.push({"text":})
+    // messages.push({"text":})
     messages.push({"text":"Hi "+firstName+" Your have: "+final})
     output={"messages":messages}
     res.send(output)
