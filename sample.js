@@ -2,6 +2,7 @@ var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
+
     var clientSecret = "oegYbgZqNLIDR8I8am1gL9op";
     var clientId = "119758712394-oncbrokug93u12gt5igbaqqlsjpkqak2.apps.googleusercontent.com";
     var redirectUrl = "urn:ietf:wg:oauth:2.0:oob";
@@ -58,7 +59,7 @@ app.post('/sheets', function(req, res){
     }
    var output = {}
    var messages=[]
-    messages.push({"text":"Hi "+name+", lets check your score"})
+    // messages.push({"text":"Hi "+name+", let us check your score"})
     messages.push({"text":"Your have: "+final})
     output={"messages":messages}
     res.send(output)
