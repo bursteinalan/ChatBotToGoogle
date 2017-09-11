@@ -2,7 +2,7 @@ var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
-
+var dateTime = require('node-datetime');
     var clientSecret = "oegYbgZqNLIDR8I8am1gL9op";
     var clientId = "119758712394-oncbrokug93u12gt5igbaqqlsjpkqak2.apps.googleusercontent.com";
     var redirectUrl = "urn:ietf:wg:oauth:2.0:oob";
@@ -81,6 +81,11 @@ req.setEncoding('utf8');
     name=firstName+" "+lastName
     console.log("** Received request for: ",name);
 
+
+    var dt = dateTime.create();
+var formatted = dt.format('Y-m-d H:M:S');
+console.log(formatted);
+
    var auth = new googleAuth();
    var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
@@ -93,7 +98,8 @@ req.setEncoding('utf8');
     var output = {}
    var messages=[]
     messages.push({"text":"Hi "+name})
-    messages.push({"text":"Tried sending response: "+results})
+    messages.push({"text":"Checking you in: "+results})
+    messages.push({"text":"Thanks for checking into Info Session 1"})
     output={"messages":messages}
     res.send(output)
     console.log(results)
@@ -106,7 +112,7 @@ req.setEncoding('utf8');
     "range": "Sheet1",
     majorDimension: "ROWS",
     "values": [
-        [name, gender]
+        [firstName, lastName, formatted]
     ]
 }
   sheets.spreadsheets.values.append({
