@@ -142,7 +142,6 @@ console.log(formatted);
 
 app.post('/PNMSignIN', function(req, res){
 req.setEncoding('utf8');
-   var name = req.body.name;
     var firstName = req.body['first name']
     var lastName = req.body['last name']
     var email = req.body['email']
@@ -150,6 +149,8 @@ req.setEncoding('utf8');
     var gender = req.body.gender
     console.log("first name: ", firstName)
     console.log("last name: ", lastName)
+    console.log("email: ", email)
+    console.log("classYear: ", classYear)
     name=firstName+" "+lastName
     console.log("** Received request for: ",name);
 
@@ -189,7 +190,7 @@ console.log(formatted);
 }
   sheets.spreadsheets.values.append({
     auth: auth,
-  spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv',
+  spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv-AU',
   range: 'Sheet1',
   valueInputOption: 'RAW',
   resource: body,
