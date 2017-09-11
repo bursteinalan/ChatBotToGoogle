@@ -146,6 +146,7 @@ req.setEncoding('utf8');
     var lastName = req.body['last name']
     var email = req.body['email']
     var classYear = req.body['classYear']
+    var major = req.body['major']
     var gender = req.body.gender
     console.log("first name: ", firstName)
     console.log("last name: ", lastName)
@@ -185,7 +186,7 @@ console.log(formatted);
     "range": "Sheet1",
     majorDimension: "ROWS",
     "values": [
-        [firstName, lastName, email, classYear, formatted]
+        [firstName, lastName, email, classYear, major, formatted]
     ]
 }
   sheets.spreadsheets.values.append({
