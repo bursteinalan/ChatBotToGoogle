@@ -138,6 +138,80 @@ console.log(formatted);
 
 
 
+
+
+app.post('/PNMSignIN', function(req, res){
+req.setEncoding('utf8');
+   var name = req.body.name;
+    var firstName = req.body['first name']
+    var lastName = req.body['last name']
+    var email = req.body['email']
+    var classYear = req.body['classYear']
+    var gender = req.body.gender
+    console.log("first name: ", firstName)
+    console.log("last name: ", lastName)
+    name=firstName+" "+lastName
+    console.log("** Received request for: ",name);
+
+
+    var dt = dateTime.create();
+var formatted = dt.format('Y-m-d H:M:S');
+console.log(formatted);
+
+   var auth = new googleAuth();
+   var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+
+   var SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+   var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
+      process.env.USERPROFILE) + '/.credentials/';
+   var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
+
+   var printSuccess = function(results){
+    var output = {}
+   var messages=[]
+    messages.push({"text":"Hi "+name})
+    messages.push({"text":"Checking you in: "+results})
+    messages.push({"text":"Thanks for checking into Info Session 1"})
+    output={"messages":messages}
+    res.send(output)
+    console.log(results)
+  }
+  
+  function WriteToGoogle(auth, callback){
+    console.log("sending data")
+  var sheets = google.sheets('v4');
+  var body = {
+    "range": "Sheet1",
+    majorDimension: "ROWS",
+    "values": [
+        [firstName, lastName, email, classYear, formatted]
+    ]
+}
+  sheets.spreadsheets.values.append({
+    auth: auth,
+  spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv',
+  range: 'Sheet1',
+  valueInputOption: 'RAW',
+  resource: body,
+}, function (err, response) {
+  if (err) {
+      console.log('The API returned an error: ' + err);
+      callback("failed");
+    }
+    console.log("Response: ",response)
+  callback("success")
+
+});
+}
+
+  authorize("",WriteToGoogle, printSuccess);
+  })
+
+
+
+
+
+
 //Get and return google data
 function runGoogle(auth,callback){
   console.log("getting data")
