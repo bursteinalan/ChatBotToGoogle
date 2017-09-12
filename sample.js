@@ -99,7 +99,7 @@ console.log(formatted);
    var messages=[]
     messages.push({"text":"Hi "+name})
     messages.push({"text":"Checking you in: "+results})
-    messages.push({"text":"Thanks for checking into Info Session 1"})
+    messages.push({"text":"Thanks for checking into Info Session 2"})
     output={"messages":messages}
     res.send(output)
     console.log(results)
