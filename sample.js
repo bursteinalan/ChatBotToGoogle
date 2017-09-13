@@ -99,7 +99,7 @@ console.log(formatted);
    var messages=[]
     messages.push({"text":"Hi "+name})
     messages.push({"text":"Checking you in: "+results})
-    messages.push({"text":"Thanks for checking into Info Session 2"})
+    messages.push({"text":"Thanks for checking into chapter"})
     output={"messages":messages}
     res.send(output)
     console.log(results)
@@ -117,7 +117,7 @@ console.log(formatted);
 }
   sheets.spreadsheets.values.append({
     auth: auth,
-  spreadsheetId: '1qmFkuf9ZSiDXwwwuKiD0eYroAQrloTviVIpDrhWdtOs',
+  spreadsheetId: '17jxZ89xSmmVl87jrNMRU_ensU0ySVPB9P03N34mb888',
   range: 'Sheet1',
   valueInputOption: 'RAW',
   resource: body,
