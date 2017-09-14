@@ -213,6 +213,97 @@ console.log(formatted);
 
 
 
+app.post('/PNMSignInSpecific', function(req, res){
+req.setEncoding('utf8');
+    var firstName = req.body['first name']
+    var lastName = req.body['last name']
+    var column='G'
+    console.log("first name: ", firstName)
+    console.log("last name: ", lastName)
+    name=firstName+" "+lastName
+    console.log("** Received request for: ",name);
+
+
+    var dt = dateTime.create();
+var formatted = dt.format('Y-m-d H:M:S');
+console.log(formatted);
+
+   var auth = new googleAuth();
+   var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+
+   var SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+   var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
+      process.env.USERPROFILE) + '/.credentials/';
+   var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
+
+   var printSuccess = function(results){
+    var output = {}
+   var messages=[]
+    messages.push({"text":"Hi "+firstName})
+    messages.push({"text":"Let me try to check you in: "+results})
+    // messages.push({"text":"Thanks for checking into Social Event!"})
+    output={"messages":messages}
+    res.send(output)
+    console.log(results)
+  }
+  
+  function WriteToGoogle(auth, callback){
+    console.log("sending data")
+  var sheets = google.sheets('v4');
+  var counter=0
+  var location=79
+	sheets.spreadsheets.values.get({
+    auth: auth,
+    spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv',
+    range: 'AB',
+  }, function(err, response) {
+    console.log("got data")
+    if (err) {
+      console.log('The API returned an error: ' + err);
+      return;
+    }
+    var rows = response.values;
+    for (var i = 0; i < results.length; i++) {
+    	counter+=1
+       var row = results[i];
+      if (row[0]==firstName && row[1]==lastName){
+	  location=counter
+      }
+    }
+  });
+
+  var body = {
+    "range": 'Sheet1!'+column+location,
+    majorDimension: "ROWS",
+    "values": [
+        ["x"]
+    ]
+}
+  sheets.spreadsheets.values.append({
+    auth: auth,
+  spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv-AU',
+  range: 'Sheet1!'+column+location,
+  valueInputOption: 'RAW',
+  resource: body,
+}, function (err, response) {
+  if (err) {
+      console.log('The API returned an error: ' + err);
+      callback("failed");
+    }
+    console.log("Response: ",response)
+  callback("success")
+
+});
+}
+
+  authorize("",WriteToGoogle, printSuccess);
+  })
+
+
+
+
+
+
 
 //Get and return google data
 function runGoogle(auth,callback){
