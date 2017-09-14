@@ -97,9 +97,9 @@ console.log(formatted);
    var printSuccess = function(results){
     var output = {}
    var messages=[]
-    messages.push({"text":"Hi "+name})
-    messages.push({"text":"Checking you in: "+results})
-    messages.push({"text":"Thanks for checking into chapter"})
+    messages.push({"text":"Hi "+firstName})
+    messages.push({"text":"Let me try to check you in: "+results})
+    messages.push({"text":"Thanks for checking into Social Event"})
     output={"messages":messages}
     res.send(output)
     console.log(results)
@@ -171,9 +171,9 @@ console.log(formatted);
    var printSuccess = function(results){
     var output = {}
    var messages=[]
-    messages.push({"text":"Hi "+name})
-    messages.push({"text":"Checking you in: "+results})
-    messages.push({"text":"Thanks for checking into Info Session 2"})
+    messages.push({"text":"Hi "+firstName})
+    messages.push({"text":"Let me try to check you in: "+results})
+    messages.push({"text":"Thanks for checking into Social Event"})
     output={"messages":messages}
     res.send(output)
     console.log(results)
