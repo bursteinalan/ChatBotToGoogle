@@ -186,7 +186,7 @@ console.log(formatted);
     "range": "Sheet1",
     majorDimension: "ROWS",
     "values": [
-        [firstName, lastName, formatted]
+        [firstName, lastName, formatted, email, major, classYear]
     ]
 }
   sheets.spreadsheets.values.append({
