@@ -2,6 +2,7 @@ var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
+var dateTime = require('node-datetime');
     var clientSecret = "oegYbgZqNLIDR8I8am1gL9op";
     var clientId = "119758712394-oncbrokug93u12gt5igbaqqlsjpkqak2.apps.googleusercontent.com";
     var redirectUrl = "urn:ietf:wg:oauth:2.0:oob";
@@ -58,8 +59,8 @@ app.post('/sheets', function(req, res){
     }
    var output = {}
    var messages=[]
-    messages.push({"text":"Hi "+name+", lets check your score"})
-    messages.push({"text":"Your have: "+final})
+    // messages.push({"text":})
+    messages.push({"text":"Hi "+firstName+"! You have: "+final})
     output={"messages":messages}
     res.send(output)
     console.log(results)
@@ -80,6 +81,11 @@ req.setEncoding('utf8');
     name=firstName+" "+lastName
     console.log("** Received request for: ",name);
 
+
+    var dt = dateTime.create();
+var formatted = dt.format('Y-m-d H:M:S');
+console.log(formatted);
+
    var auth = new googleAuth();
    var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
@@ -91,8 +97,9 @@ req.setEncoding('utf8');
    var printSuccess = function(results){
     var output = {}
    var messages=[]
-    messages.push({"text":"Hi "+name})
-    messages.push({"text":"Tried sending response: "+results})
+    messages.push({"text":"Hi "+firstName})
+    messages.push({"text":"Let me try to check you in: "+results})
+    // messages.push({"text":"Thanks for checking into Social Event"})
     output={"messages":messages}
     res.send(output)
     console.log(results)
@@ -105,12 +112,12 @@ req.setEncoding('utf8');
     "range": "Sheet1",
     majorDimension: "ROWS",
     "values": [
-        [name, gender]
+        [firstName, lastName, formatted]
     ]
 }
   sheets.spreadsheets.values.append({
     auth: auth,
-  spreadsheetId: '1mnYewufEMg2WCbXFSa_Jqwc4l3oiO_SyG8Q9WuDZoo4',
+  spreadsheetId: '17jxZ89xSmmVl87jrNMRU_ensU0ySVPB9P03N34mb888',
   range: 'Sheet1',
   valueInputOption: 'RAW',
   resource: body,
@@ -131,13 +138,180 @@ req.setEncoding('utf8');
 
 
 
+
+
+app.post('/PNMSignIN', function(req, res){
+req.setEncoding('utf8');
+    var firstName = req.body['first name']
+    var lastName = req.body['last name']
+    var email = req.body['email']
+    var classYear = req.body['classYear']
+    var major = req.body['major']
+    var gender = req.body.gender
+    console.log("first name: ", firstName)
+    console.log("last name: ", lastName)
+    console.log("email: ", email)
+    console.log("classYear: ", classYear)
+    name=firstName+" "+lastName
+    console.log("** Received request for: ",name);
+
+
+    var dt = dateTime.create();
+var formatted = dt.format('Y-m-d H:M:S');
+console.log(formatted);
+
+   var auth = new googleAuth();
+   var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+
+   var SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+   var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
+      process.env.USERPROFILE) + '/.credentials/';
+   var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
+
+   var printSuccess = function(results){
+    var output = {}
+   var messages=[]
+    messages.push({"text":"Hi "+firstName})
+    messages.push({"text":"Let me try to check you in: "+results})
+    // messages.push({"text":"Thanks for checking into Social Event!"})
+    output={"messages":messages}
+    res.send(output)
+    console.log(results)
+  }
+  
+  function WriteToGoogle(auth, callback){
+    console.log("sending data")
+  var sheets = google.sheets('v4');
+  var body = {
+    "range": "Sheet1",
+    majorDimension: "ROWS",
+    "values": [
+        [firstName, lastName, formatted, email, major, classYear]
+    ]
+}
+  sheets.spreadsheets.values.append({
+    auth: auth,
+  spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv-AU',
+  range: 'Sheet1',
+  valueInputOption: 'RAW',
+  resource: body,
+}, function (err, response) {
+  if (err) {
+      console.log('The API returned an error: ' + err);
+      callback("failed");
+    }
+    console.log("Response: ",response)
+  callback("success")
+
+});
+}
+
+  authorize("",WriteToGoogle, printSuccess);
+  })
+
+
+
+
+
+app.post('/PNMSignInSpecific', function(req, res){
+req.setEncoding('utf8');
+    var firstName = req.body['first name']
+    var lastName = req.body['last name']
+    var column='G'
+    console.log("first name: ", firstName)
+    console.log("last name: ", lastName)
+    name=firstName+" "+lastName
+    console.log("** Received request for: ",name);
+
+
+    var dt = dateTime.create();
+var formatted = dt.format('Y-m-d H:M:S');
+console.log(formatted);
+
+   var auth = new googleAuth();
+   var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+
+   var SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+   var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
+      process.env.USERPROFILE) + '/.credentials/';
+   var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
+
+   var printSuccess = function(results){
+    var output = {}
+   var messages=[]
+    messages.push({"text":"Hi "+firstName})
+    messages.push({"text":"Let me try to check you in: "+results})
+    // messages.push({"text":"Thanks for checking into Social Event!"})
+    output={"messages":messages}
+    res.send(output)
+    console.log(results)
+  }
+  
+  function WriteToGoogle(auth, callback){
+    console.log("sending data")
+  var sheets = google.sheets('v4');
+  var counter=0
+  var location=79
+	sheets.spreadsheets.values.get({
+    auth: auth,
+    spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv',
+    range: 'AB',
+  }, function(err, response) {
+    console.log("got data")
+    if (err) {
+      console.log('The API returned an error: ' + err);
+      return;
+    }
+    var rows = response.values;
+    for (var i = 0; i < results.length; i++) {
+    	counter+=1
+       var row = results[i];
+      if (row[0]==firstName && row[1]==lastName){
+	  location=counter
+      }
+    }
+  });
+
+  var body = {
+    "range": 'Sheet1!'+column+location,
+    majorDimension: "ROWS",
+    "values": [
+        ["x"]
+    ]
+}
+  sheets.spreadsheets.values.append({
+    auth: auth,
+  spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv-AU',
+  range: 'Sheet1!'+column+location,
+  valueInputOption: 'RAW',
+  resource: body,
+}, function (err, response) {
+  if (err) {
+      console.log('The API returned an error: ' + err);
+      callback("failed");
+    }
+    console.log("Response: ",response)
+  callback("success")
+
+});
+}
+
+  authorize("",WriteToGoogle, printSuccess);
+  })
+
+
+
+
+
+
+
 //Get and return google data
 function runGoogle(auth,callback){
   console.log("getting data")
   var sheets = google.sheets('v4');
   sheets.spreadsheets.values.get({
     auth: auth,
-    spreadsheetId: '1mnYewufEMg2WCbXFSa_Jqwc4l3oiO_SyG8Q9WuDZoo4',
+    spreadsheetId: '1K4kx2e8zpMfomO3zusm0mOTYQCfE2KEXh62HaLYRgF0',
     range: 'A:B',
   }, function(err, response) {
     console.log("got data")
@@ -265,7 +439,7 @@ function getGoogleData(auth) {
   var sheets = google.sheets('v4');
   sheets.spreadsheets.values.get({
     auth: auth,
-    spreadsheetId: '1mnYewufEMg2WCbXFSa_Jqwc4l3oiO_SyG8Q9WuDZoo4',
+    spreadsheetId: '1K4kx2e8zpMfomO3zusm0mOTYQCfE2KEXh62HaLYRgF0',
     range: 'A:B',
   }, function(err, response) {
     if (err) {
