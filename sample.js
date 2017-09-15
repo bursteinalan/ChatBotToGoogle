@@ -247,37 +247,13 @@ console.log(formatted);
     console.log(results)
   }
   
-  function WriteToGoogle(auth, callback){
-    console.log("sending data")
-  var sheets = google.sheets('v4');
-  var counter=0
-  var location=79
-	sheets.spreadsheets.values.get({
-    auth: auth,
-    spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv',
-    range: 'AB',
-  }, function(err, response) {
-    console.log("got data")
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
-    }
-    var rows = response.values;
-    for (var i = 0; i < results.length; i++) {
-    	counter+=1
-       var row = results[i];
-      if (row[0]==firstName && row[1]==lastName){
-	  location=counter
-      }
-    }
-  });
-
-  var body = {
-    "range": 'Sheet1!'+column+location,
-    majorDimension: "ROWS",
-    "values": [
-        ["x"]
-    ]
+	function WriteTheData(location){
+		  var body = {
+	    "range": 'Sheet1!'+column+location,
+	    majorDimension: "ROWS",
+	    "values": [
+	        ["x"]
+	    ]
 }
   sheets.spreadsheets.values.append({
     auth: auth,
@@ -294,6 +270,38 @@ console.log(formatted);
   callback("success")
 
 });
+	}
+
+  function WriteToGoogle(auth, callback){
+    console.log("sending data")
+  var sheets = google.sheets('v4');
+  var counter=0
+  var location=-1
+	sheets.spreadsheets.values.get({
+    auth: auth,
+    spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv-AU',
+    range: 'AB',
+  }, function(err, response) {
+    console.log("got data")
+    console.log(response)
+    if (err) {
+      console.log('The API returned an error: ' + err);
+      return;
+    }
+    var rows = response.values;
+    for (var i = 0; i < results.length; i++) {
+    	counter+=1
+    	console.log(row[0])
+    	console.log(row[1])
+       var row = results[i];
+      if (row[0]==firstName && row[1]==lastName){
+	  location=counter
+	  WriteTheData(location);
+      }
+    }
+  });
+
+
 }
 
   authorize("",WriteToGoogle, printSuccess);
