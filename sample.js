@@ -279,7 +279,7 @@ app.post('/PNMSignInSpecific', function(req, res) {
         var location = -1
         sheets.spreadsheets.values.get({
             auth: auth,
-            spreadsheetId: '1K4kx2e8zpMfomO3zusm0mOTYQCfE2KEXh62HaLYRgF0',
+            spreadsheetId: '1meoCchkPPavti5_A4l0HqUD98r_2F6vcgrG0TJbv-AU',
             range: 'A:B',
         }, function(err, response) {
             console.log("got data")
@@ -295,8 +295,8 @@ app.post('/PNMSignInSpecific', function(req, res) {
                 var row = rows[i];
                 console.log(row[0])
                 console.log(row[1])
-                // if (row[0] == firstName && row[1] == lastName) {
-                	if (row[0] == name) {
+                if (row[0] == firstName && row[1] == lastName) {
+                	// if (row[0] == name) {
                     console.log("found")
                     location = counter
                     var body = {
