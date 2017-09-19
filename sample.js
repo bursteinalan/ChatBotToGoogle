@@ -231,7 +231,7 @@ app.post('/PNMSignInSpecific', function(req, res) {
     req.setEncoding('utf8');
     var firstName = req.body['first name']
     var lastName = req.body['last name']
-    var column = 'G'
+    var column = 'I'
     console.log("first name: ", firstName)
     console.log("last name: ", lastName)
     name = firstName + " " + lastName
