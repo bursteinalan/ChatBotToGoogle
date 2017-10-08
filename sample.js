@@ -293,8 +293,9 @@ app.post('/PNMSignInSpecific', function(req, res) {
                 counter += 1
 
                 var row = rows[i];
-                console.log(row[0])
-                console.log(row[1])
+                console.log(row[0]+' compared to '+firstName)
+                console.log(row[1]+' compared to '+lastName)
+
                 if (row[0] == firstName && row[1] == lastName) {
                 	// if (row[0] == name) {
                     console.log("found")
